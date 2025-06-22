@@ -1,0 +1,112 @@
+Exercise 3: Implementing the Builder Pattern
+Scenario: 
+You are developing a system to create complex objects such as a Computer with multiple optional parts. Use the Builder Pattern to manage the construction process.
+Steps:
+1.	Create a New Java Project:
+·	Create a new Java project named BuilderPatternExample.
+2.	Define a Product Class:
+·	Create a class Computer with attributes like CPU, RAM, Storage, etc.
+3.	Implement the Builder Class:
+·	Create a static nested Builder class inside Computer with methods to set each attribute.
+·	Provide a build() method in the Builder class that returns an instance of Computer.
+4.	Implement the Builder Pattern:
+·	Ensure that the Computer class has a private constructor that takes the Builder as a parameter.
+5.	Test the Builder Implementation:
+·	Create a test class to demonstrate the creation of different configurations of Computer using the Builder pattern.
+
+package BuilderPatternExample;
+
+class BuilderPatternTest {
+    public static void main(String[] args) {
+        // Basic configuration
+        Computer basicComputer = new Computer.Builder()
+                .setCPU("Intel i3")
+                .setRAM("4GB")
+                .setStorage("256GB SSD")
+                .build();
+
+        Computer gamingComputer = new Computer.Builder()
+                .setCPU("Intel i9")
+                .setRAM("32GB")
+                .setStorage("1TB SSD")
+                .setGraphicsCard("NVIDIA RTX 4080")
+                .setBluetoothEnabled(true)
+                .setWifiEnabled(true)
+                .build();
+        System.out.println("Basic Computer: " + basicComputer);
+        System.out.println("Gaming Computer: " + gamingComputer);
+    }
+}
+package BuilderPatternExample;
+
+class Computer {
+    private String CPU;
+    private String RAM;
+    private String storage;
+    private String graphicsCard;
+    private boolean bluetoothEnabled;
+    private boolean wifiEnabled;
+
+    private Computer(Builder builder) {
+        this.CPU = builder.CPU;
+        this.RAM = builder.RAM;
+        this.storage = builder.storage;
+        this.graphicsCard = builder.graphicsCard;
+        this.bluetoothEnabled = builder.bluetoothEnabled;
+        this.wifiEnabled = builder.wifiEnabled;
+    }
+    public static class Builder {
+        private String CPU;
+        private String RAM;
+        private String storage;
+        private String graphicsCard;
+        private boolean bluetoothEnabled;
+        private boolean wifiEnabled;
+
+        // Setter methods for chaining
+        public Builder setCPU(String CPU) {
+            this.CPU = CPU;
+            return this;
+        }
+
+        public Builder setRAM(String RAM) {
+            this.RAM = RAM;
+            return this;
+        }
+
+        public Builder setStorage(String storage) {
+            this.storage = storage;
+            return this;
+        }
+
+        public Builder setGraphicsCard(String graphicsCard) {
+            this.graphicsCard = graphicsCard;
+            return this;
+        }
+
+        public Builder setBluetoothEnabled(boolean bluetoothEnabled) {
+            this.bluetoothEnabled = bluetoothEnabled;
+            return this;
+        }
+
+        public Builder setWifiEnabled(boolean wifiEnabled) {
+            this.wifiEnabled = wifiEnabled;
+            return this;
+        }
+        public Computer build() {
+            return new Computer(this);
+        }
+    }
+
+    
+    public String toString() {
+        return "Computer [CPU=" + CPU + ", RAM=" + RAM + ", Storage=" + storage + 
+               ", GraphicsCard=" + graphicsCard + ", Bluetooth=" + bluetoothEnabled + 
+               ", WiFi=" + wifiEnabled + "]";
+    }
+}
+Output
+ Basic Computer: Computer [CPU=Intel i3, RAM=4GB, Storage=256GB SSD, GraphicsCard=null, Bluetooth=false, WiFi=false]
+Gaming Computer: Computer [CPU=Intel i9, RAM=32GB, Storage=1TB SSD, GraphicsCard=NVIDIA RTX 4080, Bluetooth=true, WiFi=true]
+
+
