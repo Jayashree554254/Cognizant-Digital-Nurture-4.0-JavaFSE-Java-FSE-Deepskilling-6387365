@@ -1,0 +1,44 @@
+//NotificationService.java
+public interface NotificationService {
+    void sendWelcomeEmail(String userEmail);
+}
+
+//UserService.java
+public class UserService {
+    private final NotificationService notificationService;
+
+    public UserService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    public void registerUser(String email) {
+        // registration logic (skipped)
+        notificationService.sendWelcomeEmail(email);
+    }
+}
+
+
+
+//UserServiceTest.java
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+
+public class UserServiceTest {
+
+    
+    void testSendWelcomeEmailIsCalled() {
+        // Arrange
+        NotificationService mockNotification = mock(NotificationService.class);
+        UserService userService = new UserService(mockNotification);
+
+        // Act
+        userService.registerUser("alice@example.com");
+
+        // Assert: verify that sendWelcomeEmail was called with correct argument
+        verify(mockNotification).sendWelcomeEmail("Jayashree@gmail.com");
+    }
+}
+
+
+OUTPUT:
+Test passed: sendWelcomeEmail was called with "Jayashree@gmail.com"
