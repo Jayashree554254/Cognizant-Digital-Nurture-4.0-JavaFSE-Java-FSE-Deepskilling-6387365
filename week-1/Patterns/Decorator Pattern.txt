@@ -1,0 +1,80 @@
+/*Exercise 5: Implementing the Decorator Pattern
+Scenario: 
+You are developing a notification system where notifications can be sent via multiple channels (e.g., Email, SMS). Use the Decorator Pattern to add functionalities dynamically.
+Steps:
+1.	Create a New Java Project:
+·	Create a new Java project named DecoratorPatternExample.
+2.	Define Component Interface:
+·	Create an interface Notifier with a method send().
+3.	Implement Concrete Component:
+·	Create a class EmailNotifier that implements Notifier.
+4.	Implement Decorator Classes:
+·	Create abstract decorator class NotifierDecorator that implements Notifier and holds a reference to a Notifier object.
+·	Create concrete decorator classes like SMSNotifierDecorator, SlackNotifierDecorator that extend NotifierDecorator.
+5.	Test the Decorator Implementation:
+·	Create a test class to demonstrate sending notifications via multiple channels using decorators.
+Solution:*/
+package DecoratorPatternExample;
+
+public interface Notifier {
+    void send(String message);
+}
+package DecoratorPatternExample;
+
+class EmailNotifier implements Notifier {
+    public void send(String message) {
+        System.out.println("Sending Email: " + message);
+    }
+}
+package DecoratorPatternExample;
+
+abstract class NotifierDecorator implements Notifier {
+    protected Notifier wrapped;
+
+    public NotifierDecorator(Notifier notifier) {
+        this.wrapped = notifier;
+    }
+
+    public void send(String message) {
+        wrapped.send(message);
+    }
+}
+package DecoratorPatternExample;
+
+class SlackNotifierDecorator extends NotifierDecorator {
+    public SlackNotifierDecorator(Notifier notifier) {
+        super(notifier);
+    }
+
+    public void send(String message) {
+        super.send(message);
+        System.out.println("Sending Slack message: " + message);
+    }
+}
+package DecoratorPatternExample;
+
+class SMSNotifierDecorator extends NotifierDecorator {
+    public SMSNotifierDecorator(Notifier notifier) {
+        super(notifier);
+    }
+
+    public void send(String message) {
+        super.send(message);
+        System.out.println("Sending SMS: " + message);
+    }
+}
+package DecoratorPatternExample;
+
+public class DecoratorPatternTest {
+    public static void main(String[] args) {
+        Notifier notifier = new SlackNotifierDecorator(
+                                new SMSNotifierDecorator(
+                                    new EmailNotifier()));
+        notifier.send("Alert: High CPU Usage");
+    }
+}
+Output:
+Sending Email: Alert: High CPU Usage
+Sending SMS: Alert: High CPU Usage
+Sending Slack message: Alert: High CPU Usage
+

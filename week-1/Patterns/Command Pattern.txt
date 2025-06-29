@@ -1,0 +1,74 @@
+Exercise 9: Implementing the Command Pattern
+Scenario: You are developing a home automation system where commands can be issued to turn devices on or off. Use the Command Pattern to achieve this.
+Steps:
+1.	Create a New Java Project:
+·	Create a new Java project named CommandPatternExample.
+2.	Define Command Interface:
+·	Create an interface Command with a method execute().
+3.	Implement Concrete Commands:
+·	Create classes LightOnCommand, LightOffCommand that implement Command.
+4.	Implement Invoker Class:
+·	Create a class RemoteControl that holds a reference to a Command and a method to execute the command.
+5.	Implement Receiver Class:
+·	Create a class Light with methods to turn on and off.
+6.	Test the Command Implementation:
+·	Create a test class to demonstrate issuing commands using the RemoteControl.
+Solution:
+package CommandPatternExample;
+
+public interface Command {
+    void execute();
+}
+package CommandPatternExample;
+
+class LightOnCommand implements Command {
+    private Light light;
+    public LightOnCommand(Light light) { this.light = light; }
+    public void execute() { light.on(); }
+}
+package CommandPatternExample;
+
+class LightOffCommand implements Command {
+    private Light light;
+    public LightOffCommand(Light light) { this.light = light; }
+    public void execute() { light.off(); }
+}
+package CommandPatternExample;
+
+class RemoteControl {
+    private Command command;
+    public void setCommand(Command command) { this.command = command; }
+    public void pressButton() { command.execute(); }
+}
+package CommandPatternExample;
+
+public class Light {
+	public void on() {
+        System.out.println("Light turned ON.");
+    }
+
+    public void off() {
+        System.out.println("Light turned OFF.");
+    }
+}
+package CommandPatternExample;
+
+public class CommandPatternTest {
+    public static void main(String[] args) {
+        Light light = new Light();
+        Command on = new LightOnCommand(light);
+        Command off = new LightOffCommand(light);
+
+        RemoteControl remote = new RemoteControl();
+        remote.setCommand(on);
+        remote.pressButton();
+        remote.setCommand(off);
+        remote.pressButton();
+    }
+
+}
+Output:
+Light turned ON.
+Light turned OFF.
+
+
