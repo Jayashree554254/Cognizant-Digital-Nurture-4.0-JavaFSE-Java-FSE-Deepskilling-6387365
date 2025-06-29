@@ -1,0 +1,29 @@
+//Financial Forecasting
+package FinancialForecasting;
+
+class Forecasting {
+
+    // Recursive method to calculate future value
+    double futureValue(double currentValue, double growthRate, int years) {
+        if (years == 0) return currentValue;
+        return futureValue(currentValue, growthRate, years - 1) * (1 + growthRate);
+    }
+}
+package FinancialForecasting;
+
+public class Main {
+	public static void main(String[] args) {
+        Forecasting forecaster = new Forecasting();
+
+        double currentValue = 10000; // ₹10,000
+        double annualGrowthRate = 0.10; // 10% growth
+        int years = 5;
+
+        double result = forecaster.futureValue(currentValue, annualGrowthRate, years);
+
+        System.out.println("Predicted value after " + years + " years: ₹" + String.format("%.2f", result));
+    }
+}
+Output:
+Predicted value after 5 years: ₹16105.10
+

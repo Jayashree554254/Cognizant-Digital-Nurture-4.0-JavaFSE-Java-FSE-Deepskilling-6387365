@@ -1,0 +1,114 @@
+//Exercise 3: Sorting Customer Orders
+package SortingCustomerOrder;
+
+import java.util.*;
+
+class Order {
+    int orderId;
+    String customerName;
+    double totalPrice;
+
+    Order(int orderId, String customerName, double totalPrice) {
+        this.orderId = orderId;
+        this.customerName = customerName;
+        this.totalPrice = totalPrice;
+    }
+
+    public String toString() {
+        return "ID: " + orderId + ", Customer: " + customerName + ", Total Price: ₹" + totalPrice;
+    }
+}
+package SortingCustomerOrder;
+
+class OrderSortSystem {
+    void bubbleSort(Order[] orders) {
+        int n = orders.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (orders[j].totalPrice > orders[j + 1].totalPrice) {
+                    Order temp = orders[j];
+                    orders[j] = orders[j + 1];
+                    orders[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    void quickSort(Order[] orders, int low, int high) {
+        if (low < high) {
+            int pi = partition(orders, low, high);
+            quickSort(orders, low, pi - 1);
+            quickSort(orders, pi + 1, high);
+        }
+    }
+
+    int partition(Order[] orders, int low, int high) {
+        double pivot = orders[high].totalPrice;
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (orders[j].totalPrice < pivot) {
+                i++;
+                Order temp = orders[i];
+                orders[i] = orders[j];
+                orders[j] = temp;
+            }
+        }
+        Order temp = orders[i + 1];
+        orders[i + 1] = orders[high];
+        orders[high] = temp;
+        return i + 1;
+    }
+
+    void printOrders(Order[] orders) {
+        for (Order o : orders) {
+            System.out.println(o);
+        }
+    }
+}
+package SortingCustomerOrder;
+
+public class Main {
+    public static void main(String[] args) {
+        Order[] orders = {
+            new Order(301, "Alice", 499.99),
+            new Order(302, "Bob", 1299.50),
+            new Order(303, "Charlie", 199.75),
+            new Order(304, "David", 999.00)
+        };
+
+        OrderSortSystem sorter = new OrderSortSystem();
+
+        System.out.println("Original Orders:");
+        sorter.printOrders(orders);
+
+        System.out.println("\nSorted using Bubble Sort:");
+        sorter.bubbleSort(orders);
+        sorter.printOrders(orders);
+
+        Order[] orders2 = {
+            new Order(301, "Alice", 499.99),
+            new Order(302, "Bob", 1299.50),
+            new Order(303, "Charlie", 199.75),
+            new Order(304, "David", 999.00)
+        };
+
+        System.out.println("\nSorted using Quick Sort:");
+        sorter.quickSort(orders2, 0, orders2.length - 1);
+        sorter.printOrders(orders2);
+    }
+}
+Output:
+
+Sorted using Bubble Sort:
+ID: 303, Customer: Charlie, Total Price: ₹199.75
+ID: 301, Customer: Alice, Total Price: ₹499.99
+ID: 304, Customer: David, Total Price: ₹999.0
+ID: 302, Customer: Bob, Total Price: ₹1299.5
+
+Sorted using Quick Sort:
+ID: 303, Customer: Charlie, Total Price: ₹199.75
+ID: 301, Customer: Alice, Total Price: ₹499.99
+ID: 304, Customer: David, Total Price: ₹999.0
+ID: 302, Customer: Bob, Total Price: ₹1299.5
+
+

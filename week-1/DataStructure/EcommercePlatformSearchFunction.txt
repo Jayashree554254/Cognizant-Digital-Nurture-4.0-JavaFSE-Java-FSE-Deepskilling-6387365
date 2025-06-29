@@ -1,0 +1,83 @@
+//Exercise 2: E-commerce Platform Search Function
+
+package EcommercePlatformSearchFunction;
+
+import java.util.*;
+
+class Product {
+    int productId;
+    String productName;
+    String category;
+
+    Product(int productId, String productName, String category) {
+        this.productId = productId;
+        this.productName = productName;
+        this.category = category;
+    }
+
+    public String toString() {
+        return "ID: " + productId + ", Name: " + productName + ", Category: " + category;
+    }
+}
+package EcommercePlatformSearchFunction;
+
+class SearchSystem {
+    Product linearSearch(Product[] products, String name) {
+        for (Product p : products) {
+            if (p.productName.equalsIgnoreCase(name)) return p;
+        }
+        return null;
+    }
+
+    Product binarySearch(Product[] products, String name) {
+        int low = 0, high = products.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int compare = products[mid].productName.compareToIgnoreCase(name);
+            if (compare == 0) return products[mid];
+            else if (compare < 0) low = mid + 1;
+            else high = mid - 1;
+        }
+        return null;
+    }
+}
+package EcommercePlatformSearchFunction;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Main {
+    public static void main(String[] args) {
+        Product[] products = {
+            new Product(1, "Mobile", "Electronics"),
+            new Product(2, "Laptop", "Electronics"),
+            new Product(3, "Headphones", "Accessories"),
+            new Product(4, "Shoes", "Footwear")
+        };
+
+        SearchSystem search = new SearchSystem();
+
+        System.out.println("Linear Search Result for 'Laptop':");
+        Product result1 = search.linearSearch(products, "Laptop");
+        System.out.println(result1 != null ? result1 : "Not Found");
+
+        Arrays.sort(products, new Comparator<Product>() {
+            public int compare(Product p1, Product p2) {
+                return p1.productName.compareToIgnoreCase(p2.productName);
+            }
+        });
+
+        System.out.println("\nBinary Search Result for 'Shoes':");
+        Product result2 = search.binarySearch(products, "Shoes");
+        System.out.println(result2 != null ? result2 : "Not Found");
+    }
+}
+output:
+Linear Search Result for 'Laptop':
+ID: 2, Name: Laptop, Category: Electronics
+
+Binary Search Result for 'Shoes':
+ID: 4, Name: Shoes, Category: Footwear
+
+ 
+

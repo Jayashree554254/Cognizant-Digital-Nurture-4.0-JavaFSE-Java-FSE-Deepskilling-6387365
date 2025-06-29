@@ -1,0 +1,81 @@
+Library Management System
+package LibraryManagementSystem;
+
+import java.util.*;
+
+class Book {
+    int bookId;
+    String title;
+    String author;
+
+    Book(int bookId, String title, String author) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+    }
+
+    public String toString() {
+        return "ID: " + bookId + ", Title: " + title + ", Author: " + author;
+    }
+}
+
+class LibrarySearch {
+    Book linearSearch(Book[] books, String title) {
+        for (Book b : books) {
+            if (b.title.equalsIgnoreCase(title)) return b;
+        }
+        return null;
+    }
+
+    Book binarySearch(Book[] books, String title) {
+        int low = 0, high = books.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int compare = books[mid].title.compareToIgnoreCase(title);
+            if (compare == 0) return books[mid];
+            else if (compare < 0) low = mid + 1;
+            else high = mid - 1;
+        }
+        return null;
+    }
+}
+package LibraryManagementSystem;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Main {
+    public static void main(String[] args) {
+        Book[] books = {
+            new Book(501, "Algorithms", "Cormen"),
+            new Book(502, "Java Programming", "Herbert Schildt"),
+            new Book(503, "Data Structures", "Seymour Lipschutz"),
+            new Book(504, "Python Basics", "Mark Lutz")
+        };
+
+        LibrarySearch library = new LibrarySearch();
+
+        // Linear Search (no sorting)
+        System.out.println("Linear Search for 'Java Programming':");
+        Book result1 = library.linearSearch(books, "Java Programming");
+        System.out.println(result1 != null ? result1 : "Book not found");
+
+        // Binary Search (needs sorting first)
+        Arrays.sort(books, new Comparator<Book>() {
+            public int compare(Book b1, Book b2) {
+                return b1.title.compareToIgnoreCase(b2.title);
+            }
+        });
+
+        System.out.println("\nBinary Search for 'Python Basics':");
+        Book result2 = library.binarySearch(books, "Python Basics");
+        System.out.println(result2 != null ? result2 : "Book not found");
+    }
+}
+Output:
+ 
+Linear Search for 'Java Programming':
+ID: 502, Title: Java Programming, Author: Herbert Schildt
+
+Binary Search for 'Python Basics':
+ID: 504, Title: Python Basics, Author: Mark Lutz

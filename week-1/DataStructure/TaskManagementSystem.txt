@@ -1,0 +1,133 @@
+Task Management System
+package TaskManagementSystem;
+
+class Task {
+    int taskId;
+    String taskName;
+    String status;
+
+    Task(int taskId, String taskName, String status) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.status = status;
+    }
+
+    public String toString() {
+        return "ID: " + taskId + ", Task: " + taskName + ", Status: " + status;
+    }
+}
+package TaskManagementSystem;
+
+class TaskLinkedList {
+    TaskNode head;
+
+    void addTask(Task task) {
+        TaskNode newNode = new TaskNode(task);
+        if (head == null) {
+            head = newNode;
+        } else {
+            TaskNode temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+    }
+
+    Task searchTask(int id) {
+        TaskNode current = head;
+        while (current != null) {
+            if (current.task.taskId == id) return current.task;
+            current = current.next;
+        }
+        return null;
+    }
+
+    void traverseTasks() {
+        if (head == null) {
+            System.out.println("No tasks available.");
+            return;
+        }
+        TaskNode current = head;
+        while (current != null) {
+            System.out.println(current.task);
+            current = current.next;
+        }
+    }
+
+    void deleteTask(int id) {
+        if (head == null) {
+            System.out.println("Task list is empty.");
+            return;
+        }
+
+        if (head.task.taskId == id) {
+            head = head.next;
+            return;
+        }
+
+        TaskNode current = head;
+        TaskNode previous = null;
+
+        while (current != null && current.task.taskId != id) {
+            previous = current;
+            current = current.next;
+        }
+
+        if (current == null) {
+            System.out.println("Task ID not found.");
+            return;
+        }
+
+        previous.next = current.next;
+    }
+}
+package TaskManagementSystem;
+
+class TaskNode {
+    Task task;
+    TaskNode next;
+
+    TaskNode(Task task) {
+        this.task = task;
+        this.next = null;
+    }
+}
+package TaskManagementSystem;
+
+public class MainTask {
+    public static void main(String[] args) {
+        TaskLinkedList taskList = new TaskLinkedList();
+
+        Task t1 = new Task(201, "Setup Project", "Pending");
+        Task t2 = new Task(202, "Design Database", "In Progress");
+        Task t3 = new Task(203, "API Development", "Not Started");
+
+        taskList.addTask(t1);
+        taskList.addTask(t2);
+        taskList.addTask(t3);
+
+        System.out.println("All Tasks:");
+        taskList.traverseTasks();
+
+        System.out.println("\nSearch Task ID 202:");
+        Task found = taskList.searchTask(202);
+        System.out.println(found != null ? found : "Task not found.");
+
+        System.out.println("\nDelete Task ID 201:");
+        taskList.deleteTask(201);
+        taskList.traverseTasks();
+    }
+}
+Output:
+All Tasks:
+ID: 201, Task: Setup Project, Status: Pending
+ID: 202, Task: Design Database, Status: In Progress
+ID: 203, Task: API Development, Status: Not Started
+
+Search Task ID 202:
+ID: 202, Task: Design Database, Status: In Progress
+
+Delete Task ID 201:
+ID: 202, Task: Design Database, Status: In Progress
+ID: 203, Task: API Development, Status: Not Started
