@@ -1,0 +1,112 @@
+import React from 'react';
+import CohortCard from './CohortCard';
+import './App.css';
+
+function App() {
+  const cohorts = [
+    { id: 1, name: 'Full Stack Web Development', status: 'Ongoing', startDate: '2025-08-01', endDate: '2025-09-20' },
+    { id: 2, name: 'Machine Learning Bootcamp', status: 'Completed', startDate: '2025-06-10', endDate: '2025-07-25' },
+    { id: 3, name: 'Cloud Computing Essentials', status: 'Ongoing', startDate: '2025-08-05', endDate: '2025-09-30' },
+    { id: 4, name: 'UI/UX Design Sprint', status: 'Completed', startDate: '2025-05-15', endDate: '2025-06-30' }
+  ];
+
+  return (
+    <div className="dashboard">
+      <h1>Cohort Dashboard</h1>
+      <div className="cohort-container">
+        {cohorts.map(cohort => (
+          <CohortCard key={cohort.id} cohort={cohort} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+import React from 'react';
+import './App.css';
+
+function CohortCard({ cohort }) {
+  return (
+    <div className={`cohort-card ${cohort.status.toLowerCase()}`}>
+      <h2>{cohort.name}</h2>
+      <p><strong>Status:</strong> {cohort.status}</p>
+      <p><strong>Start Date:</strong> {cohort.startDate}</p>
+      <p><strong>End Date:</strong> {cohort.endDate}</p>
+    </div>
+  );
+}
+
+export default CohortCard;
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.dashboard {
+  text-align: center;
+}
+
+.cohort-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.cohort-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 250px;
+  transition: transform 0.2s;
+}
+
+.cohort-card:hover {
+  transform: scale(1.03);
+}
+
+.cohort-card.ongoing {
+  border-left: 6px solid #007bff;
+}
+
+.cohort-card.completed {
+  border-left: 6px solid #28a745;
+}
+
+Output:
+ Visual Description:
+
+Cohort Dashboard
+Full Stack Web Development
+Status: Ongoing
+Start Date: 2025-08-01
+End Date: 2025-09-20
+
+Machine Learning Bootcamp
+Status: Completed
+Start Date: 2025-06-10
+End Date: 2025-07-25
+
+Cloud Computing Essentials
+Status: Ongoing
+Start Date: 2025-08-05
+End Date: 2025-09-30
+
+UI/UX Design Sprint
+Status: Completed
+Start Date: 2025-05-15
+End Date: 2025-06-30
+
+Each card is styled with a colored border:
+
+ Blue for Ongoing
+
+ Green for Completed

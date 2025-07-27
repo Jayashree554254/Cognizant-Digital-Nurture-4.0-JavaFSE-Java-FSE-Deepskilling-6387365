@@ -1,0 +1,60 @@
+import React from 'react';
+
+function CalculateScore({ name, school, total, goal }) {
+  const average = total / goal;
+
+  return (
+    <div>
+      <h2>Student Score Summary</h2>
+      <p><strong>Name:</strong> {name}</p>
+      <p><strong>School:</strong> {school}</p>
+      <p><strong>Total Marks:</strong> {total}</p>
+      <p><strong>Goal:</strong> {goal}</p>
+      <p><strong>Average Score:</strong> {average.toFixed(2)}</p>
+    </div>
+  );
+}
+
+export default CalculateScore;
+
+
+
+import React from 'react';
+import CalculateScore from './CalculateScore';
+
+function App() {
+  return (
+    <div>
+      <h1>Student Management Portal - Score Calculator</h1>
+      <CalculateScore 
+        name="Jayashree H" 
+        school="ABC High School" 
+        total={437} 
+        goal={5} 
+      />
+    </div>
+  );
+}
+
+export default App;
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+
+OUTPUT:
+Student Management Portal - Score Calculator
+
+Student Score Summary
+Name: Jayashree H
+School:ABC High School
+Total Marks: 437
+Goal: 5
+Average Score: 87.40

@@ -1,0 +1,194 @@
+const trainers = [
+  {
+    id: 'T201',
+    name: 'Anita Desai',
+    phone: '9001234567',
+    email: 'anita.desai@cognizant.com',
+    stream: 'Cloud Computing',
+    skills: ['AWS', 'Azure', 'Google Cloud']
+  },
+  {
+    id: 'T202',
+    name: 'Ravi Kumar',
+    phone: '9012345678',
+    email: 'ravi.kumar@cognizant.com',
+    stream: 'Cybersecurity',
+    skills: ['Network Security', 'Ethical Hacking', 'Cryptography']
+  },
+  {
+    id: 'T203',
+    name: 'Meera Sharma',
+    phone: '9023456789',
+    email: 'meera.sharma@cognizant.com',
+    stream: 'DevOps',
+    skills: ['Docker', 'Kubernetes', 'Jenkins']
+  },
+  {
+    id: 'T204',
+    name: 'Vikram Sen',
+    phone: '9034567890',
+    email: 'vikram.sen@cognizant.com',
+    stream: 'AI & ML',
+    skills: ['TensorFlow', 'PyTorch', 'Scikit-learn']
+  },
+  {
+    id: 'T205',
+    name: 'Sonal Jain',
+    phone: '9045678901',
+    email: 'sonal.jain@cognizant.com',
+    stream: 'Blockchain',
+    skills: ['Ethereum', 'Solidity', 'Smart Contracts']
+  }
+];
+
+export default trainers;
+
+
+import React from 'react';
+import './App.css';
+
+function TrainerCard({ trainer }) {
+  return (
+    <div className="trainer-card">
+      <h3>{trainer.name}</h3>
+      <p><strong>ID:</strong> {trainer.id}</p>
+      <p><strong>Phone:</strong> {trainer.phone}</p>
+      <p><strong>Email:</strong> {trainer.email}</p>
+      <p><strong>Stream:</strong> {trainer.stream}</p>
+      <p><strong>Skills:</strong> {trainer.skills.join(', ')}</p>
+    </div>
+  );
+}
+
+export default TrainerCard;
+
+
+import React from 'react';
+import trainers from './trainersData';
+import TrainerCard from './TrainerCard';
+import './App.css';
+
+function App() {
+  return (
+    <div className="app">
+      <h1>Cognizant Academy - Trainers List</h1>
+      <div className="trainers-container">
+        {trainers.map(trainer => (
+          <TrainerCard key={trainer.id} trainer={trainer} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+}
+
+.app {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.trainers-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.trainer-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 280px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
+}
+
+.trainer-card:hover {
+  transform: scale(1.03);
+}
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Trainer Dashboard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+
+OUTPUT:
+Display:
+Page title: Cognizant Academy - Trainers List
+
+Each trainer shown in a styled card format with:
+
+ Output:
+Page Title:
+
+Cognizant Academy - Trainers List
+
+Trainer 1:
+Name: Anita Desai
+ID: T201
+Phone: 9001234567
+Email: anita.desai@cognizant.com
+Stream: Cloud Computing
+Skills: AWS, Azure, GCP
+
+Trainer 2:
+Name: Ravi Kumar
+ID: T202
+Phone: 9012345678
+Email: ravi.kumar@cognizant.com
+Stream: Cybersecurity
+Skills: Network Security, Ethical Hacking, Cryptography
+
+Trainer 3:
+Name: Meera Sharma
+ID: T203
+Phone: 9023456789
+Email: meera.sharma@cognizant.com
+Stream: DevOps
+Skills: Docker, Kubernetes, Jenkins
+
+Trainer 4:
+Name: Vikram Sen
+ID: T204
+Phone: 9034567890
+Email: vikram.sen@cognizant.com
+Stream: AI & ML
+Skills: TensorFlow, PyTorch, Scikit-learn
+
+Trainer 5:
+Name: Sonal Jain
+ID: T205
+Phone: 9045678901
+Email: sonal.jain@cognizant.com
+Stream: Blockchain
+Skills: Ethereum, Solidity, Smart Contracts 
