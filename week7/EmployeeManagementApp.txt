@@ -1,0 +1,105 @@
+
+// ThemeContext.js
+import React, { createContext, useState } from 'react';
+
+export const ThemeContext = createContext();
+
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light'); // Default to light
+
+  const toggleTheme = () =>
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+
+// App.js
+import React from 'react';
+import { ThemeProvider } from './ThemeContext';
+import EmployeeList from './components/EmployeeList';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <div style={{ padding: 20 }}>
+        <h1>Employee Management App</h1>
+        <EmployeeList />
+      </div>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
+
+// components/EmployeeList.js
+import React, { useContext } from 'react';
+import EmployeeCard from './EmployeeCard';
+import { ThemeContext } from '../ThemeContext';
+
+const employees = [
+  { id: 1, name: 'Alice Johnson', role: 'Developer' },
+  { id: 2, name: 'Bob Smith', role: 'Designer' },
+];
+
+const EmployeeList = () => {
+  const { toggleTheme } = useContext(ThemeContext);
+
+  return (
+    <div>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+      {employees.map(emp => (
+        <EmployeeCard key={emp.id} employee={emp} />
+      ))}
+    </div>
+  );
+};
+
+export default EmployeeList;
+
+
+// components/EmployeeCard.js
+import React, { useContext } from 'react';
+import { ThemeContext } from '../ThemeContext';
+
+const EmployeeCard = ({ employee }) => {
+  const { theme } = useContext(ThemeContext);
+
+  const cardStyle = {
+    backgroundColor: theme === 'light' ? '#fff' : '#333',
+    color: theme === 'light' ? '#000' : '#fff',
+    padding: '15px',
+    margin: '10px 0',
+    borderRadius: '5px',
+  };
+
+  const buttonStyle = {
+    backgroundColor: theme === 'light' ? '#007bff' : '#888',
+    color: '#fff',
+    border: 'none',
+    padding: '8px 12px',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  };
+
+  return (
+    <div style={cardStyle}>
+      <h3>{employee.name}</h3>
+      <p>Role: {employee.role}</p>
+      <button style={buttonStyle}>Message</button>
+    </div>
+  );
+};
+
+export default EmployeeCard;
+
+
+OUTPUT(UI behavior):
+Toggle Theme button switches between light and dark.
+
+All buttons and employee cards reflect the selected theme without prop-drilling.

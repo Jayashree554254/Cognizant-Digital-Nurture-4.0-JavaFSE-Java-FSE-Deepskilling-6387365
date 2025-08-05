@@ -1,0 +1,143 @@
+import React, { useState } from 'react';
+import CurrencyConvertor from './components/CurrencyConvertor';
+import './App.css';
+
+const App = () => {
+  const [counter, setCounter] = useState(0);
+
+  // Increment function with multiple methods
+  const handleIncrement = () => {
+    incrementValue();
+    sayHello();
+  };
+
+  const incrementValue = () => {
+    setCounter(prev => prev + 1);
+  };
+
+  const sayHello = () => {
+    console.log("Hello! This is an increment action.");
+  };
+
+  const handleDecrement = () => {
+    setCounter(prev => prev - 1);
+  };
+
+  const sayWelcome = (message) => {
+    alert(message);
+  };
+
+  const handlePress = (e) => {
+    alert("I was clicked");
+  };
+
+  return (
+    <div className="App">
+      <h1>Event Examples App</h1>
+      <h2>Counter: {counter}</h2>
+
+      {/* Increment button with multiple functions */}
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
+
+      <hr />
+
+      {/* Button passing argument to function */}
+      <button onClick={() => sayWelcome("Welcome to the Event App!")}>Say Welcome</button>
+
+      <hr />
+
+      {/* Synthetic event */}
+      <button onClick={handlePress}>OnPress</button>
+
+      <hr />
+
+      {/* Currency Converter Component */}
+      <CurrencyConvertor />
+    </div>
+  );
+};
+
+export default App;
+
+
+import React, { useState } from 'react';
+
+const CurrencyConvertor = () => {
+  const [rupees, setRupees] = useState('');
+  const [euro, setEuro] = useState('');
+
+  const handleSubmit = () => {
+    const rupeeValue = parseFloat(rupees);
+    if (!isNaN(rupeeValue)) {
+      const euroValue = (rupeeValue / 89.5).toFixed(2); // Assume conversion rate
+      setEuro(euroValue);
+    } else {
+      alert("Please enter a valid number.");
+    }
+  };
+
+  return (
+    <div>
+      <h2>Currency Converter</h2>
+      <input
+        type="number"
+        placeholder="Enter amount in INR"
+        value={rupees}
+        onChange={(e) => setRupees(e.target.value)}
+      />
+      <button onClick={handleSubmit}>Convert</button>
+      {euro && <p>€ {euro}</p>}
+    </div>
+  );
+};
+
+export default CurrencyConvertor;
+
+
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+
+OUTPUT:
+
+Event Examples App
+
+Counter: 0
+[Increment][Decrement]
+
+
+[Say Welcome]
+(Clicking shows alert: “Welcome to the Event App!”)
+
+[OnPress]
+(Clicking shows alert: “I was clicked”)
+
+Currency Converter
+
+Enter amount in INR:
+[ 89500 ]
+[Convert]
+€ 1000.00

@@ -1,0 +1,101 @@
+import React from 'react';
+import './App.css';
+
+const App = () => {
+  // Office object
+  const office = {
+    name: "Downtown Workspace",
+    rent: 55000,
+    address: "123 Main Street, Bangalore"
+  };
+
+  // Office list
+  const officeList = [
+    { id: 1, name: "City Center Hub", rent: 45000, address: "456 MG Road" },
+    { id: 2, name: "Green Park Space", rent: 62000, address: "789 Green Avenue" },
+    { id: 3, name: "Tech Valley Office", rent: 75000, address: "101 Silicon Street" },
+    { id: 4, name: "Budget Workspace", rent: 38000, address: "12 Budget Lane" }
+  ];
+
+  return (
+    <div className="App">
+      {/* Heading Element */}
+      <h1>Office Space Rental Listings</h1>
+
+      {/* Office Image with JSX attribute */}
+      <img
+        src="https://via.placeholder.com/600x300?text=Office+Space"
+        alt="Office"
+        style={{ width: '100%', height: 'auto', marginBottom: '20px' }}
+      />
+
+      {/* Single office object */}
+      <div className="office-card">
+        <h2>{office.name}</h2>
+        <p>Address: {office.address}</p>
+        <p style={{ color: office.rent < 60000 ? 'red' : 'green' }}>
+          Rent: ₹{office.rent}
+        </p>
+      </div>
+
+      <hr />
+
+      {/* Looping through office list */}
+      <h2>More Office Spaces:</h2>
+      {officeList.map(item => (
+        <div className="office-card" key={item.id}>
+          <h3>{item.name}</h3>
+          <p>Address: {item.address}</p>
+          <p style={{ color: item.rent < 60000 ? 'red' : 'green' }}>
+            Rent: ₹{item.rent}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default App;
+
+
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.office-card {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+OUTPUT:
+Heading:
+Displays "Office Space Rental Listings"
+
+Image:
+Shows a placeholder image of office space
+
+Office Object:
+Displays Downtown Workspace, rent in red (₹55000), and address
+
+List of Offices:
+Loops through multiple office entries
+
+Rent color:
+
+Red if below ₹60,000
+
+Green if ₹60,000 or above

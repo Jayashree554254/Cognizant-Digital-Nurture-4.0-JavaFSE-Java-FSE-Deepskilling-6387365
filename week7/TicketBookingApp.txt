@@ -1,0 +1,151 @@
+import React, { useState } from 'react';
+import GuestPage from './components/GuestPage';
+import UserPage from './components/UserPage';
+import './App.css';
+
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => setIsLoggedIn(false);
+
+  return (
+    <div className="App">
+      <header>
+        <h1> Ticket Booking App</h1>
+        {isLoggedIn ? (
+          <button onClick={handleLogout}>Logout</button>
+        ) : (
+          <button onClick={handleLogin}>Login</button>
+        )}
+      </header>
+
+      <main>
+        {isLoggedIn ? <UserPage /> : <GuestPage />}
+      </main>
+    </div>
+  );
+};
+
+export default App;
+
+
+import React from 'react';
+
+const GuestPage = () => {
+  const flights = [
+    { id: 1, from: 'Delhi', to: 'Mumbai', time: '10:00 AM', price: 4500 },
+    { id: 2, from: 'Bangalore', to: 'Chennai', time: '12:30 PM', price: 3200 },
+    { id: 3, from: 'Hyderabad', to: 'Kolkata', time: '3:00 PM', price: 6000 },
+  ];
+
+  return (
+    <div>
+      <h2>Available Flights (View Only)</h2>
+      <ul>
+        {flights.map(flight => (
+          <li key={flight.id}>
+             {flight.from} → {flight.to} | Time: {flight.time} | Price: ₹{flight.price}
+          </li>
+        ))}
+      </ul>
+      <p><strong>Please login to book tickets.</strong></p>
+    </div>
+  );
+};
+
+export default GuestPage;
+
+
+import React from 'react';
+
+const UserPage = () => {
+  const flights = [
+    { id: 1, from: 'Delhi', to: 'Mumbai', time: '10:00 AM', price: 4500 },
+    { id: 2, from: 'Bangalore', to: 'Chennai', time: '12:30 PM', price: 3200 },
+    { id: 3, from: 'Hyderabad', to: 'Kolkata', time: '3:00 PM', price: 6000 },
+  ];
+
+  const bookFlight = (id) => {
+    alert(`Flight ID ${id} booked successfully!`);
+  };
+
+  return (
+    <div>
+      <h2>Book Your Flight</h2>
+      <ul>
+        {flights.map(flight => (
+          <li key={flight.id}>
+            ✈️ {flight.from} → {flight.to} | Time: {flight.time} | Price: ₹{flight.price}
+            <button onClick={() => bookFlight(flight.id)} style={{ marginLeft: '10px' }}>
+              Book
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default UserPage;
+
+
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  background: #f1f1f1;
+  margin-bottom: 8px;
+  border-radius: 5px;
+}
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+OUTPUT:
+BEFORE LOGIN:
+ Ticket Booking App       [Login]
+
+Available Flights (View Only)
+- Delhi → Mumbai | 10:00 AM | ₹4500
+- Bangalore → Chennai | 12:30 PM | ₹3200
+- Hyderabad → Kolkata | 3:00 PM | ₹6000
+
+Please login to book tickets.
+
+AFTER LOGIN:
+ Ticket Booking App       [Logout]
+
+Book Your Flight
+- Delhi → Mumbai | 10:00 AM | ₹4500  [Book]
+- Bangalore → Chennai | 12:30 PM | ₹3200  [Book]
+- Hyderabad → Kolkata | 3:00 PM | ₹6000  [Book]

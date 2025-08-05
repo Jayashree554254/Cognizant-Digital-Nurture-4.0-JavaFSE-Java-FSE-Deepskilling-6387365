@@ -1,0 +1,137 @@
+
+import React from 'react';
+
+const BookDetails = () => {
+  return (
+    <div>
+      <h2> Book Details</h2>
+      <p>Title: "The Great Gatsby"</p>
+      <p>Author: F. Scott Fitzgerald</p>
+      <p>Year: 1925</p>
+    </div>
+  );
+};
+
+export default BookDetails;
+
+
+import React from 'react';
+
+const BlogDetails = () => {
+  return (
+    <div>
+      <h2> Blog Details</h2>
+      <p>Title: "React Patterns"</p>
+      <p>Author: Dan Abramov</p>
+      <p>Date: July 2021</p>
+    </div>
+  );
+};
+
+export default BlogDetails;
+
+
+import React from 'react';
+
+const CourseDetails = () => {
+  return (
+    <div>
+      <h2>🎓 Course Details</h2>
+      <p>Course: "Full Stack Development"</p>
+      <p>Instructor: John Doe</p>
+      <p>Duration: 6 months</p>
+    </div>
+  );
+};
+
+export default CourseDetails;
+
+
+import React, { useState } from 'react';
+import BookDetails from './components/BookDetails';
+import BlogDetails from './components/BlogDetails';
+import CourseDetails from './components/CourseDetails';
+
+function App() {
+  const [view, setView] = useState('book'); // Default
+
+  // Element Variable Method
+  let content;
+  if (view === 'book') {
+    content = <BookDetails />;
+  } else if (view === 'blog') {
+    content = <BlogDetails />;
+  } else if (view === 'course') {
+    content = <CourseDetails />;
+  }
+
+  // Switch statement method (alternative)
+  const renderSwitch = () => {
+    switch (view) {
+      case 'book':
+        return <BookDetails />;
+      case 'blog':
+        return <BlogDetails />;
+      case 'course':
+        return <CourseDetails />;
+      default:
+        return <p>No view selected.</p>;
+    }
+  };
+
+  return (
+    <div className="App" style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <h1> Blogger App</h1>
+
+      {/* Conditional Buttons */}
+      <button onClick={() => setView('book')}>Show Book</button>
+      <button onClick={() => setView('blog')}>Show Blog</button>
+      <button onClick={() => setView('course')}>Show Course</button>
+      <button onClick={() => setView('none')}>Clear</button>
+
+      <hr />
+
+      {/* 1. Using element variable */}
+      {content}
+
+      {/* 2. Ternary Operator */}
+      {view === 'none' ? <p>Please select a view</p> : null}
+
+      {/* 3. Logical && Operator */}
+      {view === 'blog' && <p>You're viewing a blog post.</p>}
+
+      {/* 4. Switch rendering */}
+      {/* You could replace the above with this:
+        {renderSwitch()} 
+      */}
+    </div>
+  );
+}
+
+export default App;
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+OUTPUT:
+ON LOAD:
+ Blogger App
+
+[Show Book] [Show Blog] [Show Course] [Clear]
+-- Shows Book Details by default --
+
+AFTER CLICKING "SHOW BLOG":
+ Blog Details
+Title: React Patterns
+...
+You're viewing a blog post.
+
+AFTER CLICKING "CLEAR":
+Please select a view
+(No other component shown)

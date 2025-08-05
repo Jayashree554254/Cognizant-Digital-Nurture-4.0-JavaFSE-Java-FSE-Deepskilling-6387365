@@ -1,0 +1,181 @@
+// components/Register.js
+import React, { useState } from 'react';
+
+const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (formData.name.length < 5) {
+      newErrors.name = 'Name must be at least 5 characters.';
+    }
+
+    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+      newErrors.email = 'Email must contain "@" and "."';
+    }
+
+    if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters.';
+    }
+
+    return newErrors;
+  };
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      alert('Please correct the errors before submitting.');
+    } else {
+      setErrors({});
+      alert(`Registration Successful!\nName: ${formData.name}\nEmail: ${formData.email}`);
+      setFormData({ name: '', email: '', password: '' });
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2> Mail Registration</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          {errors.name && <p style={styles.error}>{errors.name}</p>}
+        </label>
+
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          {errors.email && <p style={styles.error}>{errors.email}</p>}
+        </label>
+
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          {errors.password && <p style={styles.error}>{errors.password}</p>}
+        </label>
+
+        <button type="submit" style={styles.button}>Register</button>
+      </form>
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    maxWidth: 400,
+    margin: 'auto',
+    padding: 20,
+    fontFamily: 'Arial',
+    border: '1px solid #ccc',
+    borderRadius: 8,
+    marginTop: 40
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  input: {
+    marginBottom: 10,
+    padding: 8,
+    fontSize: 14
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: 4,
+    cursor: 'pointer'
+  },
+  error: {
+    color: 'red',
+    fontSize: 12,
+    margin: '4px 0'
+  }
+};
+
+export default Register;
+
+
+// App.js
+import React from 'react';
+import Register from './components/Register';
+
+function App() {
+  return (
+    <div className="App">
+      <h1 style={{ textAlign: 'center' }}>📨 Mail Register App</h1>
+      <Register />
+    </div>
+  );
+}
+
+export default App;
+
+
+// index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+
+OUTPUT:
+ON LOAD:
+ Mail Register App
+---------------------
+ Mail Registration
+
+Name:        [         ]
+Email:       [         ]
+Password:    [         ]
+[Register]
+
+
+ON SUBMIT(IF VALID):
+ Alert:
+Registration Successful!
+Name: John Smith
+Email: john@example.com
+
+IF INVALID:
+ Inline error under each field
+ Alert: Please correct the errors before submitting.
